@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     modalContent.innerHTML = "<p style='color: #ccc;'>Loading song information...</p>";
 
     try {
-      const response = await fetch(`http://localhost:3001/api/lyrics/search?artist=${encodeURIComponent(artist)}&songTitle=${encodeURIComponent(songTitle)}`);
+      const response = await fetch(`https://music-4to7.onrender.com/api/lyrics/search?artist=${encodeURIComponent(artist)}&songTitle=${encodeURIComponent(songTitle)}`);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
   function fetchSuggestionsFromAPI(history) {
-    fetch("http://localhost:3001/api/ai/suggestions", {
+    fetch("https://music-4to7.onrender.com/api/ai/suggestions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
