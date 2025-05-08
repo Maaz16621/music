@@ -1,0 +1,258 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .song-art-small {
+    width: 100px;
+    height: auto;
+  }
+  
+  /* Body Styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  html {
+    padding: 0;
+    /* overflow-x: hidden;  Remove this line, it can cause issues */
+  }
+  
+  /* Header Styles */
+  header {
+    background-color: #1e1e1e;
+    color: white;
+    padding: 1rem 0; /* Use rem for padding */
+  }
+  
+  header nav {
+    padding: 0 1rem; /* Use rem for padding */
+  }
+  
+  header .nav .nav-item {
+    margin-left: 1rem; /* Use rem for margin */
+  }
+  
+  header .nav .nav-link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  header .nav .nav-link:hover {
+    color: #d3d3d3;
+  }
+  
+  /* Main Section Styles */
+  main {
+    padding: 2rem 1rem; /* Use rem for padding */
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem; /* Use rem for padding */
+  }
+  
+  /* Form Styles */
+  form {
+    /* Glassmorphism Styles */
+    background-color: rgba(255, 255, 255, 0.13);
+    /* Transparent white */
+    border-radius: 0.625rem;
+    /* Rounded corners - rem */
+    backdrop-filter: blur(0.625rem);
+    /* Blur the background - rem */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    /* Light border */
+    box-shadow: 0 0 2.5rem rgba(8, 7, 16, 0.6);
+    /* Subtle shadow - rem */
+    padding: 1.875rem;
+    /* Use rem for padding */
+    max-width: 90%; /* Use percentage for width */
+    margin: 1.25rem auto; /* Use rem for margin */
+  }
+  
+  /* Footer Styles */
+  footer {
+    text-align: center;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 1.25rem 0; /* Use rem for padding */
+    margin-top: 2.5rem; /* Use rem for margin */
+  }
+  
+  footer p {
+    font-size: 1rem;
+  }
+  
+  /* User Navigation Dropdown */
+  #userNav .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    display: none;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+    color: #212529;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    text-align: left;
+    list-style: none;
+    background-clip: padding-box;
+  }
+  
+  #userNav .dropdown-menu.show {
+    display: block;
+  }
+  
+  #userNav .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+  }
+  
+  #userNav .dropdown-item:hover,
+  #userNav .dropdown-item:focus {
+    background-color: #f8f9fa;
+    color: #212529;
+    text-decoration: none;
+  }
+  
+  /* Media Queries for Responsiveness */
+  
+  /* Small screens (less than 576px) */
+  @media (max-width: 576px) {
+    header {
+      padding: 0.75rem 0;
+    }
+  
+    header nav {
+      padding: 0 0.5rem;
+    }
+  
+    header .nav .nav-item {
+      margin-left: 0.5rem;
+    }
+  
+    main {
+      padding: 1.5rem 0.5rem;
+    }
+  
+    form {
+      padding: 1.25rem;
+    }
+  
+    footer {
+      padding: 1rem 0;
+      margin-top: 2rem;
+    }
+  
+    .song-art-small{
+      width: 80px;
+    }
+  }
+  
+  /* Medium screens (577px to 768px) */
+  @media (min-width: 577px) and (max-width: 768px) {
+    header {
+      padding: 1rem 0;
+    }
+  
+    header nav {
+      padding: 0 1rem;
+    }
+  
+    header .nav .nav-item {
+      margin-left: 1rem;
+    }
+  
+    main {
+      padding: 2rem 1rem;
+    }
+  
+    form {
+      padding: 1.5rem;
+      max-width: 80%;
+    }
+  
+    footer {
+      padding: 1.25rem 0;
+      margin-top: 2rem;
+    }
+  }
+  
+  /* Large screens (769px to 992px) */
+  @media (min-width: 769px) and (max-width: 992px) {
+    header {
+      padding: 1rem 0;
+    }
+  
+    header nav {
+      padding: 0 1rem;
+    }
+  
+    header .nav .nav-item {
+      margin-left: 1rem;
+    }
+  
+    main {
+      padding: 2rem 1rem;
+    }
+  
+    form {
+      padding: 1.875rem;
+      max-width: 70%;
+    }
+  
+    footer {
+      padding: 1.25rem 0;
+      margin-top: 2.5rem;
+    }
+  }
+  
+  /* Extra large screens (993px and up) */
+  @media (min-width: 993px) {
+    header {
+      padding: 1rem 0;
+    }
+  
+    header nav {
+      padding: 0 1rem;
+    }
+  
+    header .nav .nav-item {
+      margin-left: 1rem;
+    }
+  
+    main {
+      padding: 2rem 1rem;
+    }
+  
+    form {
+      padding: 1.875rem;
+      max-width: 60%;
+    }
+  
+    footer {
+      padding: 1.25rem 0;
+      margin-top: 2.5rem;
+    }
+  }
+  

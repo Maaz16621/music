@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MusicInfo</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="bg-dark text-white p-3">
+    <nav class="container d-flex justify-content-between align-items-center">
+      <h1 class="h4 m-0">MusicInfo</h1>
+      <div>
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link text-white">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link text-white">About</a>
+          </li>
+        </ul>
+      </div>
+      <div id="userNav" class="user-info dropdown"></div>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <section class="text-center">
+      <h1>Get Song Information</h1>
+      <p>Enter the artist and song name, and we'll fetch the information for you!</p>
+      <form id="lyricsForm" class="bg-white p-4 shadow rounded mx-auto" style="max-width: 600px;">
+        <div class="mb-3 text-start">
+          <label for="artist" class="form-label">Artist Name:</label>
+          <input type="text" class="form-control" id="artist" placeholder="Enter artist name" required />
+        </div>
+        <div class="mb-3 text-start">
+          <label for="songTitle" class="form-label">Song Title:</label>
+          <input type="text" class="form-control" id="songTitle" placeholder="Enter song title" required />
+        </div>
+        <button type="submit" class="btn btn-dark w-100" id="getInfoButton">Get Info</button>
+      </form>
+      <div id="suggestedBox" class="mt-5 p-4 bg-light shadow rounded" style="max-width: 600px; margin: 0 auto;">
+        <h5 class="mb-3">🎧 Suggested Songs for You</h5>
+        <ul id="suggestedList" class="list-group"></ul>
+      </div>
+      
+      <div id="lyricsOutput" class="d-none"></div>
+    </section>
+  </main>
+
+  <!--<footer class="bg-dark text-white text-center py-3">
+    <p class="mb-1">© 2025 MusicInfo. All Rights Reserved.</p>
+    <div class="social-links">
+      <a href="#" class="text-white me-2">Facebook</a>
+      <a href="#" class="text-white me-2">Instagram</a>
+      <a href="#" class="text-white">Twitter</a>
+    </div>
+  </footer> -->
+<!-- Song Info Modal -->
+<div class="modal fade" id="songInfoModal" tabindex="-1" aria-labelledby="songInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content" style="background-color: #1e1e1e; color: #ffffff;">
+      <div class="modal-header" style="border-bottom: 1px solid #333;">
+        <h5 class="modal-title" id="songInfoModalLabel">Song Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+      </div>
+      <div class="modal-body" id="modalLyricsContent" style="background-color: #1e1e1e;">
+        <!-- Content gets injected here by script.js -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Welcome Side Modal Start -->
+<!-- Welcome Side Modal Start -->
+<div class="welcome-modal" style="
+  position: fixed;
+  top: 430px;
+  right: 20px;
+  width: 300px;
+  background: rgba(30, 30, 30, 0.8); /* More transparent background */
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  overflow: hidden;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  cursor: move; /* Make it clear the modal is draggable */
+">
+  <button class="welcome-modal-close btn btn-sm btn-light" style="align-self: flex-end; border: none; margin-bottom: 10px;">
+    <i class="fas fa-times"></i>
+  </button>
+  <iframe class="w-100" style="height: 150px; border: 0; background: transparent;" src="https://embed.lottiefiles.com/animation/31548"></iframe>
+  <div class="text-center mt-2">
+    <h5 class="mb-2" style="font-size: 16px;">🎵 Discover Today's Top Music! 🎶</h5>
+    <button class="btn btn-outline-light btn-sm welcome-modal-btn">Let's Start!</button>
+  </div>
+</div>
+
+
+  <div class="modal fade" id="logoutModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-body">
+          <p>Are you sure you want to logout?</p>
+          <button class="btn btn-danger me-2" onclick="confirmLogout()">Yes, Logout</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+      localStorage.clear();
+function saveSearchToHistory(artist, title) {
+  const history = JSON.parse(localStorage.getItem("songHistory")) || [];
+  const exists = history.some(song => song.artist === artist && song.title === title);
+  if (!exists) {
+    history.push({ artist, title });
+    localStorage.setItem("songHistory", JSON.stringify(history));
+  }
+}
+
+
+     document.addEventListener('DOMContentLoaded', function () {
+    const welcomeModal = document.querySelector('.welcome-modal');
+    const closeModalButton = document.querySelector('.welcome-modal-close');
+    const startButton = document.querySelector('.welcome-modal-btn');
+
+    // Modal stays visible until user closes it
+    closeModalButton.addEventListener('click', function () {
+      welcomeModal.style.display = 'none';
+    });
+    startButton.addEventListener('click', function () {
+      welcomeModal.style.display = 'none';
+    });
+  });
+
+    window.addEventListener("DOMContentLoaded", () => {
+        const fbName = sessionStorage.getItem("fb_name");
+        const fbId = sessionStorage.getItem("fb_id");
+        const googleName = sessionStorage.getItem("google_name");
+        const googlePicture = sessionStorage.getItem("google_picture");
+        const getInfoButton = document.getElementById("getInfoButton");
+  
+        if (fbName && fbId) {
+            const profilePicUrl = `https://graph.facebook.com/${fbId}/picture?type=normal`;
+            setUserNav(fbName, profilePicUrl);
+            getInfoButton.disabled = false;
+        } else if (googleName && googlePicture) {
+            setUserNav(googleName, googlePicture);
+            getInfoButton.disabled = false;
+        } else {
+            document.getElementById("userNav").innerHTML = `<a href="login.html" class="btn btn-outline-light">Login</a>`;
+            getInfoButton.disabled = false;
+        }
+    });
+  
+    function setUserNav(name, profilePicUrl) {
+        document.getElementById("userNav").innerHTML = `<div class="dropdown">
+            <button class="btn dropdown-toggle text-white d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="${profilePicUrl}" alt="Profile" class="rounded-circle" width="30" height="30" />
+              <span>${name}</span>
+              <i class="fas fa-cog"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" onclick="showModal()">Logout</button></li>
+            </ul>
+          </div>`;
+    }
+  
+    function confirmLogout() {
+        sessionStorage.clear();
+        window.location.replace("login.html");
+    }
+  
+    function showModal() {
+      const logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+      logoutModal.show();
+    }
+
+   
+  </script>
+</body>
+</html>
